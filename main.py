@@ -21,16 +21,18 @@ options.add_argument('--disable-blink-features=AutomationControlled')
 class awsIOTblog:
     def __init__(self):
         self.driver = webdriver.Chrome(service=s, options=options)
-        sleep(5)
-        # self.driver = webdriver.Chrome(chrome_driver_path)
-
+        # sleep(5)
+        wait = WebDriverWait(self.driver, 5)
+        
     def blogdata(self):
         data={}
         Blog_dict={}
         try:
             self.driver.maximize_window()
             self.driver.get("https://aws.amazon.com/blogs/iot/")
-            sleep(5)
+            # sleep(5)
+            # wait for page to load
+            wait = WebDriverWait(self.driver, 10)
             
             # Find the HTML element with the attribute
             elements = self.driver.find_elements(By.XPATH,'//article[@typeof="TechArticle"]')
@@ -90,7 +92,10 @@ class awsIOTblog:
                     link = blog.find_element(By.XPATH, ".//h2[@class='lb-bold blog-post-title']/a")
                     href = link.get_attribute('href')
                     link.click()
-                    sleep(5)
+                    # sleep(5)
+                    # Click the link and wait for the page to load
+                    wait = WebDriverWait(self.driver, 5)
+                    wait.until(EC.url_to_be(href))
 
                     # link = blog.find_element(By.XPATH,"/html/body/div[3]/div/main/article[1]/div/div[2]/h2/a").click()
                     # sleep(5)
@@ -119,7 +124,7 @@ class awsIOTblog:
                 df.to_csv('awsIOTblog.csv')
                 page_link = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[3]/div/main/div/div/a')))
                 page_link.click()
-                sleep(10)
+                # sleep(10)
                 
                 if page_link:
                     ifpagination = True
