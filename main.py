@@ -121,7 +121,7 @@ class awsIOTblog:
                     WebDriverWait(self.driver, 5).until(EC.presence_of_element_located((By.XPATH,'//article[@typeof="TechArticle"]')))
                     
                     print("\n")
-                df.to_csv('awsIOTblog.csv')
+                    df.to_csv('awsIOTblog1.csv')
                 page_link = WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[3]/div/main/div/div/a')))
                 page_link.click()
                 # sleep(10)
